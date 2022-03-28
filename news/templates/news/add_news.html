@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<!--title-->
+{% block title %}{{title}}{% endblock title %}
+
+<!--sidebar-->
+{% block sidebar %}
+<div class="list-group">
+    {% for item in categories %}
+    <a href="{{item.get_absolute_url}}" class="list-group-item list-group-item-action">{{item.title}}</a>
+    {% endfor %}
+</div>
+{% endblock sidebar %}
+
+<!--content-->
+{% block content %}
+<h1>Добовление данные</h1>
+
+<form action="{% url 'add_news' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{form.as_p}}
+
+    {{ form.non_field.errors }}
+
+    {% comment %}
+    {% for field in form %}
+    <div class="mb-3">
+        {{field.label_tag}}
+        {{field}}
+        <div class="invalid-feedback">
+            {{field.errors}}
+        </div>
+    </div>
+    {% endfor %}
+    {% endcomment %}
+
+    <button type="submit" class="btn btn-primary btn-block">Добовить</button>
+</form>
+{% endblock content %}
+
+

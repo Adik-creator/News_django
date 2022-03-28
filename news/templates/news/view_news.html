@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<!--title-->
+{% block title %}{{news_item.title}}{% endblock title %}
+
+<!--sidebar-->
+{% block sidebar %}
+<div class="list-group">
+    {% for item in categories %}
+    <a href="{{item.get_absolute_url}}" class="list-group-item list-group-item-action">{{item.title}}</a>
+    {% endfor %}
+</div>
+{% endblock sidebar %}
+
+<!--content-->
+{% block content %}
+<div class="card mb-3">
+    <div class="card-header">
+        <p>Категория: <a href="{% url 'category' news_item.category.pk %}">{{news_item.category.title}}</a></p>
+    </div>
+    <div class="card-body">
+        <div class="media">
+            {% if news_item.photo %}
+            <img src="{{news_item.photo.url}}" alt='photo' width="350">
+            {% endif %}
+            <div class="media-body">
+                <h5 class="card-title">{{news_item.title}}</h5>
+                <p class="card-text">{{news_item.context}}</p>
+<!--                <a href="#" class="btn btn-primary">Read more...</a>-->
+            </div>
+        </div>
+    </div>
+    <div class="card-footer text-muted">
+        <p>Опубликовано: {{news_item.created_at | date:"Y-m-d H:i:s"}}</p>
+    </div>
+</div>
+{% endblock content %}
